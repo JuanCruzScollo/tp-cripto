@@ -12,3 +12,9 @@ El script requiere tener instalado Python 3 y dos dependencias criptográficas:
 
 pip3 install pynacl cryptography
 python3 benchmark.py
+
+Que decir en la presentacion:
+1. En los papers teóricos, AEGIS-128L destruye a AES-GCM en velocidad. Sin embargo, en nuestro benchmark real corriendo bajo Python en una Mac ARM64, AES-GCM gana por más de 60 veces.
+
+2. Mientras que AES-GCM está respaldado por OpenSSL con ensamblador nativo para el chip Apple Silicon, la librería actual de AEGIS en Python no tiene mapeadas las extensiones criptográficas vectoriales para arquitecturas ARM, obligando al procesador a resolverlo por software.
+3. Esto valida empíricamente la sección de 'Vulnerabilidades y consideraciones' de nuestro TP escrito: la asombrosa velocidad de AEGIS-128L es altamente dependiente del hardware y de que el entorno de software implemente correctamente. Sin esa alineación perfecta, el estándar de la industria (AES-GCM) sigue siendo la opción más robusta y veloz en entornos de producción diversos.
